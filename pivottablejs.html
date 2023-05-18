@@ -1,0 +1,82 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>PivotTable.js</title>
+
+        <!-- external libs from cdnjs -->
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.min.css">
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.11/c3.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-csv/0.71/jquery.csv-0.71.min.js"></script>
+
+
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/pivottable/2.19.0/pivot.min.css">
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pivottable/2.19.0/pivot.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pivottable/2.19.0/d3_renderers.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pivottable/2.19.0/c3_renderers.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pivottable/2.19.0/export_renderers.min.js"></script>
+
+        <style>
+            body {font-family: Verdana;}
+            .node {
+              border: solid 1px white;
+              font: 10px sans-serif;
+              line-height: 12px;
+              overflow: hidden;
+              position: absolute;
+              text-indent: 2px;
+            }
+            .c3-line, .c3-focused {stroke-width: 3px !important;}
+            .c3-bar {stroke: white !important; stroke-width: 1;}
+            .c3 text { font-size: 12px; color: grey;}
+            .tick line {stroke: white;}
+            .c3-axis path {stroke: grey;}
+            .c3-circle { opacity: 1 !important; }
+            .c3-xgrid-focus {visibility: hidden !important;}
+        </style>
+    </head>
+    <body>
+        <script type="text/javascript">
+            $(function(){
+                if(window.location != window.parent.location)
+                    $("<a>", {target:"_blank", href:""})
+                        .text("[pop out]").prependTo($("body"));
+
+                $("#output").pivotUI(
+                    $.csv.toArrays($("#output").text()),
+                    $.extend({
+                        renderers: $.extend(
+                            $.pivotUtilities.renderers,
+                            $.pivotUtilities.c3_renderers,
+                            $.pivotUtilities.d3_renderers,
+                            $.pivotUtilities.export_renderers
+                            ),
+                        hiddenAttributes: [""]
+                    }, {})
+                ).show();
+             });
+        </script>
+        <div id="output" style="display: none;">,method,Sampling,Preproces Method,variable_name,auc
+0,svm,Balanced,NA & Classic,kmeans_silhouette_21,0.5722222222222223
+1,svm,Balanced,NA & Zipfs,kmeans_silhouette_22,0.6430555555555555
+2,svm,Balanced,Porter & Classic,kmeans_silhouette_23,0.6694444444444444
+3,svm,Balanced,Porter & Zipfs,kmeans_silhouette_24,0.6513888888888888
+4,nb,Balanced,NA & Classic,dbscan_silhouette_21,0.6555555555555556
+5,nb,Balanced,NA & Zipfs,dbscan_silhouette_22,0.6916666666666667
+6,nb,Balanced,Porter & Classic,dbscan_silhouette_23,0.6972222222222222
+7,nb,Balanced,Porter & Zipfs,dbscan_silhouette_24,0.6972222222222222
+8,svm,UnBalanced,NA & Classic,kmeans_silhouette_31,0.9032258064516129
+9,svm,UnBalanced,NA & Zipfs,kmeans_silhouette_32,0.9447004608294931
+10,svm,UnBalanced,Porter & Classic,kmeans_silhouette_33,0.8940092165898618
+11,svm,UnBalanced,Porter & Zipfs,kmeans_silhouette_34,0.9447004608294931
+12,nb,UnBalanced,NA & Classic,dbscan_silhouette_31,0.8341013824884793
+13,nb,UnBalanced,NA & Zipfs,dbscan_silhouette_32,0.8663594470046082
+14,nb,UnBalanced,Porter & Classic,dbscan_silhouette_33,0.8479262672811061
+15,nb,UnBalanced,Porter & Zipfs,dbscan_silhouette_34,0.8940092165898618
+</div>
+    </body>
+</html>
